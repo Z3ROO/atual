@@ -55,7 +55,7 @@ export function DraggableDiv(props: DraggableDivProps) {
   return (
     <div {...props} 
       style={{boxShadow: style ? shadow[style] : ''}} 
-      className="div2" draggable 
+      className="draggable-div" draggable 
       onDragStart={dragStart}
       onDragOver={dragOver}
       onDragLeave={dragOut}

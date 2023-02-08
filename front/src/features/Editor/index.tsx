@@ -4,7 +4,7 @@ import { Controlls } from "./components/Controlls";
 
 export function Editor() {
   return (
-    <div className="">
+    <div className="Editor">
       <EditorContextProvider>
         <Controlls />
         <Content />
