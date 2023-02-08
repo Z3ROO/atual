@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useEditorContext } from "../Context";
+import { useEditorContext } from "../../../Context";
 
 export interface DraggableDivProps extends React.HTMLAttributes<HTMLDivElement> {
   position: number
