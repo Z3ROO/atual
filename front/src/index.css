@@ -14,6 +14,23 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.div1 {
+  border: 2px solid gray;
+  padding: .5em;
+  min-height: 50px;
+}
+
+.div2 {
+  border: 2px solid gray;
+  background-color: lightgray;
+  padding: .5em;
+  min-height: 50px;
+}
+
+img {
+  max-height: 200px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
