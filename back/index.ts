@@ -13,7 +13,7 @@ app.get('/api/getArticle', (req, res) => {
   const { id } = req.query
   if (id === '1') {
     fs.readFile(join(__dirname, 'images', 'packet.json'), 'utf-8', (err, file) => {
-      res.json({data: file})
+      res.json({data: JSON.parse(file)})
     })
   }
 })
@@ -22,17 +22,18 @@ app.post('/save', (req, res) => {
   const { data } = req.body;
 
   if (!data) {
-    res.sendStatus(400);
+    res.status(400);
+    res.json({});
     return
   }
 
   fs.writeFile(join(__dirname, 'images', 'packet.json'), JSON.stringify(data), (err) => {
     if (err) {
       console.log(err)
-      res.sendStatus(500)
+      res.status(400);
     }
 
-    res.sendStatus(200);
+    res.json({ok: 'ok'});
   })
 
 })
@@ -41,7 +42,8 @@ app.post('/image', (req, res) => {
   const { image } = req.body;
 
   if (!image) {
-    res.sendStatus(400);
+    res.status(400);
+    res.json({});
     return;
   }    
 
@@ -54,7 +56,7 @@ app.post('/image', (req, res) => {
     console.log('Image uploaded');
   });
 
-  res.sendStatus(200);
+  res.json({});
 
 });
 

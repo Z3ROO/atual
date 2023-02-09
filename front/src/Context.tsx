@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const EditorContext = createContext<IEditorContext|null>(null);
 export const useEditorContext = () => useContext(EditorContext);
 
 export function EditorContextProvider(props: any) {
-  const [packet, setPacket] = useState<{[key: string]: any}[]>(mockPacket);
+  const [packet, setPacket] = useState<{[key: string]: any}[]>([]);
   const [dumpster, setDumpster] = useState(false);
   const toggleDumpster = (val:boolean) => setDumpster(val);
 
@@ -24,19 +24,33 @@ export function EditorContextProvider(props: any) {
   async function save() {
     const request = await fetch('http://localhost:3000/save', {
       method: 'post',
-      body: JSON.stringify({data: packet}),
       headers: {
-        'Content-type': 'application/json'
-      }
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({data: packet}),
     });
 
     const response = await request.json();
 
   }
 
+  async function getArticle() {
+    const request = await fetch('http://localhost:3000/api/getArticle?id=1');
+    const response = await request.json();
+
+    if (response.data) {
+      setPacket(response.data)
+    }
+  }
+
   const value = {
     packet, setPacket, reorderNodes, dumpster, toggleDumpster, save
   }
+
+  useEffect(() => {
+    getArticle();
+  }, [])
 
   return (
     <EditorContext.Provider {...{value}}>
