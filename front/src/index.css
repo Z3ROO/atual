@@ -163,12 +163,18 @@
   align-items: start;
   margin: .75rem 0;
   margin-right: 1.5rem;
+  
 }
 
 .controls-button-info > span:first-child {
   font-weight: 700;
-  font-size: 1rem;
   margin: .375rem 0;
+  font-size: 1rem;
+}
+
+.controls-button-info > span:last-child {
+  color:rgb(146, 146, 146);
+  font-size: .875rem;
 }
 
 

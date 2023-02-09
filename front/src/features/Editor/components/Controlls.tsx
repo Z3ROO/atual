@@ -3,9 +3,9 @@ import { BiPlus } from 'react-icons/bi';
 import { v4 as uuid } from 'uuid';
 import { useEditorContext } from '../../../Context';
 import imageIcon from '../../../assets/image.svg';
-import divisorIcon from '../../../assets/text.svg';
+import divisorIcon from '../../../assets/dash.svg';
 import textIcon from '../../../assets/text.svg';
-import folderIcon from '../../../assets/text.svg';
+import headingIcon from '../../../assets/heading.svg';
 
 const PARAGRAPH = {
   type: 'paragraph',
@@ -89,8 +89,8 @@ function Text(props: any) {
       <p>Text</p>
       <Button
         name="Heading"
-        description="Insira um titulo"
-        icon={textIcon}
+        description="Insira um titulo ao texto"
+        icon={headingIcon}
         onClick={() => {
           setPacket(prev => prev.concat(newNode(HEADING)))
           setIsControlsOpen(false)
@@ -98,7 +98,7 @@ function Text(props: any) {
       />
       <Button
         name="Paragrafo"
-        description="Insira um paragrafo"
+        description="Insira um paragrafo ao texto"
         icon={textIcon}
         onClick={() => {
           setPacket(prev => prev.concat(newNode(PARAGRAPH)))
@@ -150,7 +150,7 @@ function Basic(props: any) {
       <Button 
         name="Divisor"
         description="Insira um divisor"
-        icon={textIcon}
+        icon={divisorIcon}
         onClick={() => {
           setPacket(prev => prev.concat(newNode(DIVISION)));
           setIsControlsOpen(false);
