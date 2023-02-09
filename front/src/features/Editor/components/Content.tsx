@@ -25,15 +25,15 @@ function parsePacketNode(node: any, position: number) {
   let component: JSX.Element|null = null;
 
   if (type === 'heading') {
-    component = <Heading node={node} />;
+    component = <Heading node={node} position={position} />;
   }
 
   if (type === 'paragraph') {
-    component = <Paragraph node={node} />;
+    component = <Paragraph node={node} position={position} />;
   }
 
   if (type === 'hr') {
-    component = <Hr/>;
+    component = <Hr />;
   }
 
   if (type === 'image') {

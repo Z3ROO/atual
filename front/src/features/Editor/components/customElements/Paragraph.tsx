@@ -4,7 +4,7 @@ import { useEditorContext } from "../../../../Context";
 export function Paragraph(props: any) {
   const { setPacket } = useEditorContext()!;
 
-  const { identifier } = props;
+  const { position } = props;
   const { type, content, focus } = props.node;
   const paragraphRef = useRef<HTMLParagraphElement>(null);
 
@@ -17,7 +17,11 @@ export function Paragraph(props: any) {
   }, [paragraphRef.current])
 
   return (
-    <p className="custom-p" ref={paragraphRef} contentEditable>
+    <p className="custom-p" ref={paragraphRef} contentEditable 
+      onBlur={e => {
+        setPacket(prev => (prev.map((node, index) => index === position ? { ...node, content:e.target.textContent} : node)))
+      }}
+    >
       { content }
     </p>
   )

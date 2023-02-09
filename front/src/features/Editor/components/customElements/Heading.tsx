@@ -4,6 +4,7 @@ import { useEditorContext } from "../../../../Context";
 export function Heading(props: any) {
   const { setPacket } = useEditorContext()!;
 
+  const { position } = props;
   const { type, content, focus } = props.node;
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -16,7 +17,11 @@ export function Heading(props: any) {
   }, [headingRef.current])
 
   return (
-    <h2 ref={headingRef} contentEditable>
+    <h2 ref={headingRef} contentEditable 
+      onBlur={e => {
+        setPacket(prev => (prev.map((node, index) => index === position ? { ...node, content:e.target.textContent} : node)))
+      }}
+    >
       { content }
     </h2>
   )
