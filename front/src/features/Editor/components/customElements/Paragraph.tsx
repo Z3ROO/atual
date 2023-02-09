@@ -17,7 +17,7 @@ export function Paragraph(props: any) {
   }, [paragraphRef.current])
 
   return (
-    <p ref={paragraphRef} contentEditable>
+    <p className="custom-p" ref={paragraphRef} contentEditable>
       { content }
     </p>
   )
