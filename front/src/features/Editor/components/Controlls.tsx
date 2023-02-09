@@ -75,13 +75,14 @@ function Controls(props:any) {
 
   return (
     <>
-      <Text />
-      <Basic />
+      <Text {...{setIsControlsOpen}} />
+      <Basic {...{setIsControlsOpen}} />
     </>
   )
 }
 
-function Text() {
+function Text(props: any) {  
+  const {setIsControlsOpen} = props;
   const { packet, setPacket } = useEditorContext()!;
   return (
     <div className="controls-group">
@@ -92,6 +93,7 @@ function Text() {
         icon={textIcon}
         onClick={() => {
           setPacket(prev => prev.concat(newNode(HEADING)))
+          setIsControlsOpen(false)
         }}
       />
       <Button
@@ -100,13 +102,15 @@ function Text() {
         icon={textIcon}
         onClick={() => {
           setPacket(prev => prev.concat(newNode(PARAGRAPH)))
+          setIsControlsOpen(false)
         }}
       />
     </div>
   )
 }
 
-function Basic() {
+function Basic(props: any) {  
+  const {setIsControlsOpen} = props;
   const { packet, setPacket } = useEditorContext()!;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -140,6 +144,7 @@ function Basic() {
             return;
           }
           setPacket(prev => prev.concat(newNode(IMAGE, {imageBase64})));
+          setIsControlsOpen(false);
         }}
       />
       <Button 
@@ -147,7 +152,8 @@ function Basic() {
         description="Insira um divisor"
         icon={textIcon}
         onClick={() => {
-          setPacket(prev => prev.concat(newNode(DIVISION)))
+          setPacket(prev => prev.concat(newNode(DIVISION)));
+          setIsControlsOpen(false);
         }}
       />
     </div>
