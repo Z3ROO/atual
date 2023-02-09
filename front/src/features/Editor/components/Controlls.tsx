@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useEditorContext } from '../../../Context';
 import imageIcon from '../../../assets/image.svg';
@@ -40,22 +40,33 @@ function newNode(node:any, extra?:any) {
   }
 }
 
-export function Controlls() {
-  const [isControllsOpen, setIsControllsOpen] = useState(false);
+export function ControlPanel() {
+  const [isControlsOpen, setIsControlsOpen] = useState(false);
   
   return (
-    <div className='controlls'>
+    <div className='controlls'  onClick={e => e.stopPropagation()}>
       {
-        !isControllsOpen ? 
-        (<div onClick={e => setIsControllsOpen(true)}> + </div>) : 
-        (
-          <>
-            <Text />
-            <Basic />
-          </>
-        )
+        !isControlsOpen ? 
+        (<div onClick={e => setIsControlsOpen(true)}> + </div>) : 
+        ( <Controls {...{setIsControlsOpen}} /> )
       }
     </div>
+  )
+}
+
+function Controls(props:any) {
+  const {setIsControllsOpen} = props;
+
+  useEffect(() => {
+    window.onclick = () => { setIsControllsOpen(false) }
+    return () => {window.onclick = null};
+  }, []);
+
+  return (
+    <>
+      <Text />
+      <Basic />
+    </>
   )
 }
 
