@@ -1,14 +1,29 @@
-import { EditorContextProvider } from "../../Context";
+import { EditorContextProvider, useEditorContext } from "../../Context";
 import { Content } from "./components/Content";
 import { ControlPanel } from "./components/Controlls";
+import { CgTrashEmpty } from 'react-icons/cg';
 
 export function Editor() {
   return (
     <div className="Editor">
       <EditorContextProvider>
+        <Dumpster />
         <Content />
         <ControlPanel />
       </EditorContextProvider>
+    </div>
+  )
+}
+
+function Dumpster() {
+  const { dumpster, toggleDumpster } = useEditorContext()!;
+
+  if (!dumpster)
+    return null
+
+  return (
+    <div className="dumpster" onDragStart={()=> { console.log("aqui tbm")}} draggable>
+      <CgTrashEmpty style={{width: '2rem', height: '2rem', cursor: 'pointer'}} />
     </div>
   )
 }

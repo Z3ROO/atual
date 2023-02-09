@@ -1,3 +1,3 @@
 export function Hr(props: any) {
-  return <hr />
+  return <hr className="custom-hr" />
 }

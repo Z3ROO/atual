@@ -5,6 +5,8 @@ export const useEditorContext = () => useContext(EditorContext);
 
 export function EditorContextProvider(props: any) {
   const [packet, setPacket] = useState<{[key: string]: any}[]>(mockPacket);
+  const [dumpster, setDumpster] = useState(false);
+  const toggleDumpster = (val:boolean) => setDumpster(val);
 
   function reorderNodes(oldPosition: number, newPosition: number) {
     setPacket(prev => {
@@ -20,7 +22,7 @@ export function EditorContextProvider(props: any) {
   }
 
   const value = {
-    packet, setPacket, reorderNodes
+    packet, setPacket, reorderNodes, dumpster, toggleDumpster
   }
 
   return (
@@ -38,6 +40,8 @@ interface IEditorContext {
       [key: string]: any;
   }[]>>
   reorderNodes(oldPosition: number, newPosition: number): void
+  dumpster: boolean
+  toggleDumpster: (val: boolean) => void
 }
 
 

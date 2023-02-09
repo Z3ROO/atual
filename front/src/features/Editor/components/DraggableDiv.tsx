@@ -6,7 +6,7 @@ export interface DraggableDivProps extends React.HTMLAttributes<HTMLDivElement> 
 }
 
 export function DraggableDiv(props: DraggableDivProps) {
-  const { reorderNodes } = useEditorContext()!;
+  const { reorderNodes, toggleDumpster } = useEditorContext()!;
   const { position } = props;
   const [style, setStyle] = useState<string|null>(null);
 
@@ -42,6 +42,7 @@ export function DraggableDiv(props: DraggableDivProps) {
   function dragStart(e: React.DragEvent<HTMLDivElement>) {
     e.dataTransfer.setData('position', position.toString());
     console.log(e.dataTransfer.getData('position'))
+    toggleDumpster(true);
   }
 
   function dragDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -49,6 +50,7 @@ export function DraggableDiv(props: DraggableDivProps) {
     let newPosition = style === 'top' ? position : position+1;
     reorderNodes(draggingNode, newPosition);
     setStyle(null)
+    toggleDumpster(false);
   }
 
 
