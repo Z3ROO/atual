@@ -44,7 +44,7 @@ function newNode(node:any, extra?:any) {
 
 export function ControlPanel() {
   const [isControlsOpen, setIsControlsOpen] = useState(false);
-  const { save } = useEditorContext()!;
+  const { save, saved } = useEditorContext()!;
   
   return (
     <div className='controls-container'>
@@ -72,6 +72,7 @@ export function ControlPanel() {
           color: '#10b981',
           margin: '.5rem'
         }} />
+        {!saved && <span style={{position: 'absolute', top: '-0.20rem', right: '-0.20rem', color: '#0c8f63', fontSize: '1.25rem'}}>*</span>}
       </div>
     </div>
   )

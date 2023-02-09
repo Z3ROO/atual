@@ -70,9 +70,20 @@
   position: absolute;
   top: 2rem;
   left: calc(50% - 1.5rem);
-  padding: .5rem;
   border-radius: 100%;
-  background-color: #10b981;
+  background-color: #f1f1f1;  
+  box-shadow: 1px 2px 4px #4b4b4b3d;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dumpster > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #10b981;
 }
 
 .content {  

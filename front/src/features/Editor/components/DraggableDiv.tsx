@@ -11,8 +11,13 @@ export function DraggableDiv(props: DraggableDivProps) {
   const [style, setStyle] = useState<string|null>(null);
 
   const shadow:{[key:string]: string} = {
-    top: 'inset 0 3em 2.5em -40px gold',
-    bottom: 'inset 0 -3em 2.5em -40px gold'
+    top: 'inset 0 3em 5em -40px #10b981',
+    bottom: 'inset 0 -3em 5em -40px #10b981'
+  }
+
+  const border: {[key:string]: string} = {
+    top: '1px solid #10b981',
+    bottom: '1px solid #10b981'
   }
 
   function dragOver(e:React.DragEvent<HTMLDivElement>) {
@@ -50,12 +55,17 @@ export function DraggableDiv(props: DraggableDivProps) {
     let newPosition = style === 'top' ? position : position+1;
     reorderNodes(draggingNode, newPosition);
     setStyle(null)
+    toggleDumpster(false)
   }
 
 
   return (
     <div {...props} 
-      style={{boxShadow: style ? shadow[style] : ''}} 
+      style={{
+        boxShadow: style ? shadow[style] : '',
+        borderTop: style === 'top' ? border[style] : '',
+        borderBottom: style === 'bottom' ? border[style] : ''
+      }} 
       className="draggable-div" draggable 
       onDragStart={dragStart}
       onDragOver={dragOver}

@@ -23,21 +23,21 @@ function Dumpster() {
 
   return (
     <div className="dumpster" draggable
-    onDragEnd={e => toggleDumpster(false)}
-    onDrop={(e)=> { 
-      const data = e.dataTransfer.getData('position');
+      onDragEnd={e => toggleDumpster(false)}
+      onDrop={(e)=> { 
+        const data = e.dataTransfer.getData('position');
 
-      if (data === '')
-        return;
+        if (data === '')
+          return;
 
-      setPacket(prev => {
-        return prev.filter((node, index) => index !== Number(data))
-      })
-      toggleDumpster(false);
-    }}
-    onDragOver={e => {e.preventDefault()}}
+        setPacket(prev => {
+          return prev.filter((node, index) => index !== Number(data))
+        })
+        toggleDumpster(false);
+      }}
+      onDragOver={e => {e.preventDefault()}}
     >
-      <CgTrashEmpty style={{width: '2rem', height: '2rem', cursor: 'pointer'}} />
+      <CgTrashEmpty />
     </div>
   )
 }

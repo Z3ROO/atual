@@ -1,12 +1,18 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const EditorContext = createContext<IEditorContext|null>(null);
 export const useEditorContext = () => useContext(EditorContext);
 
 export function EditorContextProvider(props: any) {
   const [packet, setPacket] = useState<{[key: string]: any}[]>([]);
+  const [saved, setSaved] = useState(false);
+  const savedTimeout = useRef<number>();
   const [dumpster, setDumpster] = useState(false);
   const toggleDumpster = (val:boolean) => setDumpster(val);
+
+  function newNode(){
+    setSaved(false);
+  }
 
   function reorderNodes(oldPosition: number, newPosition: number) {
     setPacket(prev => {
@@ -18,7 +24,7 @@ export function EditorContextProvider(props: any) {
 
       return filteredPacket;
     })
-
+    setSaved(false);
   }
 
   async function save() {
@@ -32,7 +38,7 @@ export function EditorContextProvider(props: any) {
     });
 
     const response = await request.json();
-
+    setSaved(true);
   }
 
   async function getArticle() {
@@ -41,16 +47,30 @@ export function EditorContextProvider(props: any) {
 
     if (response.data) {
       setPacket(response.data)
+      setSaved(true);
     }
   }
 
   const value = {
-    packet, setPacket, reorderNodes, dumpster, toggleDumpster, save
+    packet, setPacket, reorderNodes, dumpster, toggleDumpster, save, saved
   }
 
   useEffect(() => {
     getArticle();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (!saved) {
+      clearTimeout(savedTimeout.current);
+      savedTimeout.current = setTimeout(() => {
+        console.log('saved')
+        save()
+      }, 5000);
+    }
+    else
+      clearTimeout(savedTimeout.current)
+
+  },[saved]);
 
   return (
     <EditorContext.Provider {...{value}}>
@@ -70,6 +90,7 @@ interface IEditorContext {
   dumpster: boolean
   toggleDumpster: (val: boolean) => void
   save: () => Promise<void>
+  saved: boolean
 }
 
 
