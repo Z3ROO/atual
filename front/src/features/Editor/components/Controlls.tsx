@@ -100,6 +100,8 @@ function Basic(props: any) {
 
     reader.addEventListener('load', () => {
       setImageBase64(reader.result);
+      newNode(IMAGE, {imageBase64:reader.result})
+      setIsControlsOpen(false);
     });
 
     reader.readAsDataURL(image);
@@ -122,8 +124,6 @@ function Basic(props: any) {
             fileInputRef.current?.click();
             return;
           }
-          newNode(IMAGE, {imageBase64})
-          setIsControlsOpen(false);
         }}
       />
       <Button 
