@@ -30,7 +30,7 @@
 }
 
 .top-bar {
-  height: 1.75rem;
+  height: 2.5rem;
   padding: .5rem .25rem;
   margin-left: .5rem;
   font-size: .9rem;
@@ -63,6 +63,7 @@
   height: 100%;
   padding: .25rem .5rem;
   width: 80%;
+  max-width: 1024px;
   margin: 0 auto;
 }
 
@@ -229,6 +230,8 @@
   background-color: rgb(224, 224, 224);
   box-shadow: 1px 1px 3px rgba(100, 100, 100, 0.137);
   border-style: none;
+  margin: 1rem;
+  padding: 0;
 }
 
 .custom-img {
