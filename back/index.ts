@@ -9,6 +9,34 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
+app.get('/api/getArticle', (req, res) => {
+  const { id } = req.query
+  if (id === '1') {
+    fs.readFile(join(__dirname, 'images', 'packet.json'), 'utf-8', (err, file) => {
+      res.json({data: file})
+    })
+  }
+})
+
+app.post('/save', (req, res) => {
+  const { data } = req.body;
+
+  if (!data) {
+    res.sendStatus(400);
+    return
+  }
+
+  fs.writeFile(join(__dirname, 'images', 'packet.json'), JSON.stringify(data), (err) => {
+    if (err) {
+      console.log(err)
+      res.sendStatus(500)
+    }
+
+    res.sendStatus(200);
+  })
+
+})
+
 app.post('/image', (req, res) => {
   const { image } = req.body;
 
