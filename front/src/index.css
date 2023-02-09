@@ -36,6 +36,11 @@
 
 .top-bar {
   padding: .5rem .25rem;
+  font-size: .75rem;
+}
+
+.tob-bar > img {
+  width: .75rem;
 }
 
 .top-bar-span {
