@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useEditorContext } from '../../../Context';
+import imageIcon from '../../../assets/image.svg';
+import divisorIcon from '../../../assets/text.svg';
+import textIcon from '../../../assets/text.svg';
+import folderIcon from '../../../assets/text.svg';
 
 const PARAGRAPH = {
   type: 'paragraph',
@@ -37,7 +41,53 @@ function newNode(node:any, extra?:any) {
 }
 
 export function Controlls() {
+  const [isControllsOpen, setIsControllsOpen] = useState(false);
+  
+  return (
+    <div className='controlls'>
+      {
+        !isControllsOpen ? 
+        (<div onClick={e => setIsControllsOpen(true)}> + </div>) : 
+        (
+          <>
+            <Text />
+            <Basic />
+          </>
+        )
+      }
+    </div>
+  )
+}
+
+function Text() {
   const { packet, setPacket } = useEditorContext()!;
+  return (
+    <div className="controlls-group">
+      <p>Text</p>
+      <Button
+        name="Heading"
+        description="Insira um titulo"
+        icon={textIcon}
+        onClick={() => {
+          setPacket(prev => prev.concat(newNode(HEADING)))
+        }}
+      />
+      <Button
+        name="Paragrafo"
+        description="Insira um paragrafo"
+        icon={textIcon}
+        onClick={() => {
+          setPacket(prev => prev.concat(newNode(PARAGRAPH)))
+        }}
+      />
+    </div>
+  )
+}
+
+function Basic() {
+  const { packet, setPacket } = useEditorContext()!;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(null);
 
   function parseImage(image: File) {
@@ -51,31 +101,55 @@ export function Controlls() {
   }
 
   return (
-    <div>
-      <button
+    <div className="controlls-group">
+      <p>Basic</p>
+      <input 
+        ref={fileInputRef} hidden
+        type="file" accept='.jpg, .png, .jpeg, .gif' 
+        onChange={e => e.target.files && parseImage(e.target.files[0])} 
+      />
+      <Button
+        name='Image'
+        description='Envie uma imagem'
+        icon={imageIcon}
         onClick={() => {
-          setPacket(prev => prev.concat(newNode(HEADING)))
+          if (imageBase64 == null) {
+            fileInputRef.current?.click();
+            return;
+          }
+          setPacket(prev => prev.concat(newNode(IMAGE, {imageBase64})));
         }}
-      >Heading</button>
-      <button
-        onClick={() => {
-          setPacket(prev => prev.concat(newNode(PARAGRAPH)))
-        }}
-      >Paragrafo</button>
-      <button 
+      />
+      <Button 
+        name="Divisor"
+        description="Insira um divisor"
+        icon={textIcon}
         onClick={() => {
           setPacket(prev => prev.concat(newNode(DIVISION)))
         }}
-      >Divisão</button>
-      <input type="file" accept='.jpg, .png, .jpeg, .gif' onChange={e => e.target.files && parseImage(e.target.files[0])} />
-      <button 
-        onClick={() => {
-          if (imageBase64 == null)
-            return
-
-          setPacket(prev => prev.concat(newNode(IMAGE, {imageBase64})))
-        }}
-      >Divisão</button>
+      />
     </div>
+  )
+}
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+  name: string
+  description: string
+  icon: string
+}
+
+function Button(props: ButtonProps) {
+  const { name, description, icon } = props;
+
+  return (
+    <button {...props} className="controlls-button">
+      <div className="controlls-button-icon">
+        <img src={icon} />
+      </div>
+      <div className="controlls-button-info">
+        <span><strong>{name}</strong></span>
+        <span>{description}</span>
+      </div>
+    </button>
   )
 }

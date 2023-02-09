@@ -6,8 +6,8 @@ export function Editor() {
   return (
     <div className="Editor">
       <EditorContextProvider>
-        <Controlls />
         <Content />
+        <Controlls />
       </EditorContextProvider>
     </div>
   )
