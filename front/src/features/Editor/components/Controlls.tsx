@@ -38,7 +38,7 @@ export function ControlPanel() {
           color: '#10b981',
           margin: '.5rem'
         }} />
-        {saved && <span style={{position: 'absolute', top: '-0.125', right: '0.125rem', color: '#0c8f63', fontSize: '1.25rem'}}>*</span>}
+        {!saved && <span style={{position: 'absolute', top: '-0.125', right: '0.125rem', color: '#0c8f63', fontSize: '1.25rem'}}>*</span>}
       </div>
     </div>
   )
