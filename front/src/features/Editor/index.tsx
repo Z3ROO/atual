@@ -5,7 +5,7 @@ import { CgTrashEmpty } from 'react-icons/cg';
 
 export function Editor() {
   return (
-    <div className="Editor">
+    <div className="Editor custom-scrollbar">
       <EditorContextProvider>
         <Dumpster />
         <Content />

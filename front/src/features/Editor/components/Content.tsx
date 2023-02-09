@@ -9,7 +9,7 @@ export function Content() {
   const { packet, setPacket } = useEditorContext()!;
 
   return (
-    <div>
+    <div className="content">
       {
         packet.map((node, index) => {
           return parsePacketNode(node, index)

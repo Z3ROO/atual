@@ -5,8 +5,7 @@ export function Img(props: any) {
 
   const { imageBase64 } = props.node
 
-
   return (
-    <img src={imageBase64} />
+    <img src={imageBase64} className="custom-img" />
   )
 }
