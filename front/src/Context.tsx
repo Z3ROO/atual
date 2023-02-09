@@ -26,6 +26,9 @@ export const IMAGE = {
 }
 
 
+const MODE = import.meta.env.PROD;
+const URL = MODE ? '' : 'http://localhost:3000'
+
 const EditorContext = createContext<IEditorContext|null>(null);
 export const useEditorContext = () => useContext(EditorContext);
 
@@ -79,7 +82,7 @@ export function EditorContextProvider(props: any) {
   }
 
   async function save() {
-    const request = await fetch('http://localhost:3000/save', {
+    const request = await fetch(URL+'/save', {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -93,7 +96,7 @@ export function EditorContextProvider(props: any) {
   }
 
   async function getArticle() {
-    const request = await fetch('http://localhost:3000/api/getArticle?id=1');
+    const request = await fetch(URL+'/api/getArticle?id=1');
     const response = await request.json();
 
     if (response.data) {
@@ -149,25 +152,3 @@ interface IEditorContext {
   removeNode(position: number): void
   unfocusAllNodes(): void
 }
-
-
-
-
-
-const mockPacket: {[key: string]: any}[] = [
-  {
-    type: 'heading',
-    content: 'Titulo'
-  },
-  // {
-  //   type: 'image/stored' || 'image/base64' || 'image/url',
-  //   content: ''
-  // },
-  {
-    type: 'paragraph',
-    content: 'Texto para entrar no paragrafo'
-  },
-  {
-    type: 'hr'
-  }
-]

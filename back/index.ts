@@ -3,6 +3,9 @@ import fs from 'fs';
 import { join } from 'path';
 import cors from 'cors';
 
+import * as url from 'url';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 const app = express();
 
 app.use(express.json({limit: '50mb'}));

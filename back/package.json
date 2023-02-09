@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon index.ts",
-    "build": "cd ../front && npx vite build && mv dist ../back/ && cd ../back && npx tsc",
+    "build": "cd ../front && npx vite build && cp -r dist ../back/ && cd ../back && npx tsc",
     "start": "node index.js"
   },
   "keywords": [],
