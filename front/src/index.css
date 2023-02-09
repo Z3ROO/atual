@@ -113,6 +113,13 @@
   cursor: pointer;
 }
 
+.controls-save {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
 .controls-open > span {
   font-size: .75rem;
   color: rgb(151, 151, 151);

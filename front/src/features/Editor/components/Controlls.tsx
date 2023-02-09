@@ -31,14 +31,14 @@ export function ControlPanel() {
           ( <Controls {...{setIsControlsOpen}} /> )
         }
       </div>
-      <div className='controls controls-open' onClick={save}>
+      <div className='controls controls-save' onClick={save}>
         <RiSaveLine style={{
           width:'1.25rem',
           height: '1.25rem',
           color: '#10b981',
           margin: '.5rem'
         }} />
-        {!saved && <span style={{position: 'absolute', top: '-0.20rem', right: '-0.20rem', color: '#0c8f63', fontSize: '1.25rem'}}>*</span>}
+        {saved && <span style={{position: 'absolute', top: '-0.125', right: '0.125rem', color: '#0c8f63', fontSize: '1.25rem'}}>*</span>}
       </div>
     </div>
   )
