@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "build": "cd ../front && npm i && npx vite build && cp -r dist ../back/ && npx tsc",
-    "build-dev": "cd ../front && npx vite build && cp -r dist ../back/ && cd ../back && npx tsc",
+    "build-render": "npx tsc",
     "start": "node index.js"
   },
   "keywords": [],
