@@ -1,4 +1,30 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { v4 as uuid } from 'uuid';
+
+export const PARAGRAPH = {
+  type: 'paragraph',
+  focus: false,
+  content: ''
+}
+
+export const HEADING = {
+  type: 'heading',
+  focus: false,
+  content: ''
+}
+
+export const DIVISIOR = {
+  type: 'hr',
+  focus: false,
+  content: ''
+}
+
+export const IMAGE = {
+  type: 'image',
+  focus: false,
+  content: ''
+}
+
 
 const EditorContext = createContext<IEditorContext|null>(null);
 export const useEditorContext = () => useContext(EditorContext);
@@ -10,7 +36,13 @@ export function EditorContextProvider(props: any) {
   const [dumpster, setDumpster] = useState(false);
   const toggleDumpster = (val:boolean) => setDumpster(val);
 
-  function newNode(){
+  function newNode(node:any, extra?:any){
+    setPacket(prev => prev.concat({
+      id: uuid(),
+      ...node,
+      ...extra,
+      focus: true 
+    }))
     setSaved(false);
   }
 
@@ -25,6 +57,25 @@ export function EditorContextProvider(props: any) {
       return filteredPacket;
     })
     setSaved(false);
+  }
+
+  function updateNodeContent(position: number, content: string) {
+    setPacket(prev => {
+      return (
+        prev.map((node, index) => index === position ? { ...node, content} : node)
+      )
+    });
+    setSaved(false);
+  }
+
+  function removeNode(position: number) {
+    setPacket(prev => {
+      return prev.filter((node, index) => index !== position)
+    })
+  }
+
+  function unfocusAllNodes(){
+    setPacket(prev => (prev.map(node => node.focus ? { ...node, focus:false} : node)))
   }
 
   async function save() {
@@ -52,7 +103,9 @@ export function EditorContextProvider(props: any) {
   }
 
   const value = {
-    packet, setPacket, reorderNodes, dumpster, toggleDumpster, save, saved
+    packet, setPacket, reorderNodes, dumpster, 
+    toggleDumpster, save, saved, newNode,
+    updateNodeContent, removeNode, unfocusAllNodes
   }
 
   useEffect(() => {
@@ -91,6 +144,10 @@ interface IEditorContext {
   toggleDumpster: (val: boolean) => void
   save: () => Promise<void>
   saved: boolean
+  newNode(node: any, extra?: any): void
+  updateNodeContent(position: number, content: string): void
+  removeNode(position: number): void
+  unfocusAllNodes(): void
 }
 
 

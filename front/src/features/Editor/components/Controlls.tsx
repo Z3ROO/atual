@@ -1,46 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import { RiSaveLine } from 'react-icons/ri';
-import { v4 as uuid } from 'uuid';
-import { useEditorContext } from '../../../Context';
+import { DIVISIOR, HEADING, IMAGE, PARAGRAPH, useEditorContext } from '../../../Context';
 import imageIcon from '../../../assets/image.svg';
 import divisorIcon from '../../../assets/dash.svg';
 import textIcon from '../../../assets/text.svg';
 import headingIcon from '../../../assets/heading.svg';
 
-const PARAGRAPH = {
-  type: 'paragraph',
-  focus: false,
-  content: ''
-}
-
-const HEADING = {
-  type: 'heading',
-  focus: false,
-  content: ''
-}
-
-const DIVISION = {
-  type: 'hr',
-  focus: false,
-  content: ''
-}
-
-const IMAGE = {
-  type: 'image',
-  focus: false,
-  content: ''
-}
-
-function newNode(node:any, extra?:any) {
-  const { type } = node;
-  return {
-    id: uuid(),
-    ...node,
-    ...extra,
-    focus: true 
-  }
-}
 
 export function ControlPanel() {
   const [isControlsOpen, setIsControlsOpen] = useState(false);
@@ -96,25 +62,25 @@ function Controls(props:any) {
 
 function Text(props: any) {  
   const {setIsControlsOpen} = props;
-  const { packet, setPacket } = useEditorContext()!;
+  const { packet, setPacket, newNode } = useEditorContext()!;
   return (
     <div className="controls-group">
       <p>Text</p>
       <Button
         name="Heading"
-        description="Insira um titulo ao texto"
+        description="Insira um titulo ao artigo"
         icon={headingIcon}
         onClick={() => {
-          setPacket(prev => prev.concat(newNode(HEADING)))
+          newNode(HEADING)
           setIsControlsOpen(false)
         }}
       />
       <Button
         name="Paragrafo"
-        description="Insira um paragrafo ao texto"
+        description="Insira um paragrafo ao artigo"
         icon={textIcon}
         onClick={() => {
-          setPacket(prev => prev.concat(newNode(PARAGRAPH)))
+          newNode(PARAGRAPH)
           setIsControlsOpen(false)
         }}
       />
@@ -124,7 +90,7 @@ function Text(props: any) {
 
 function Basic(props: any) {  
   const {setIsControlsOpen} = props;
-  const { packet, setPacket } = useEditorContext()!;
+  const { packet, setPacket, newNode } = useEditorContext()!;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(null);
@@ -149,23 +115,23 @@ function Basic(props: any) {
       />
       <Button
         name='Image'
-        description='Envie uma imagem'
+        description='Insira uma imagem ao artigo'
         icon={imageIcon}
         onClick={() => {
           if (imageBase64 == null) {
             fileInputRef.current?.click();
             return;
           }
-          setPacket(prev => prev.concat(newNode(IMAGE, {imageBase64})));
+          newNode(IMAGE, {imageBase64})
           setIsControlsOpen(false);
         }}
       />
       <Button 
-        name="Divisor"
-        description="Insira um divisor"
+        name="Separador"
+        description="Insira um separador ao artigo"
         icon={divisorIcon}
         onClick={() => {
-          setPacket(prev => prev.concat(newNode(DIVISION)));
+          newNode(DIVISIOR)
           setIsControlsOpen(false);
         }}
       />

@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useEditorContext } from "../../../../Context";
 
 export function Heading(props: any) {
-  const { setPacket } = useEditorContext()!;
+  const { unfocusAllNodes, updateNodeContent, removeNode } = useEditorContext()!;
 
   const { position } = props;
   const { type, content, focus } = props.node;
@@ -11,15 +11,17 @@ export function Heading(props: any) {
   useEffect(() => {
     if (focus && headingRef.current) {
       headingRef.current.focus();
-
-      setPacket(prev => (prev.map(node => node.focus ? { ...node, focus:false} : node)))
+      unfocusAllNodes()
     }
   }, [headingRef.current])
 
   return (
     <h2 ref={headingRef} contentEditable 
       onBlur={e => {
-        setPacket(prev => (prev.map((node, index) => index === position ? { ...node, content:e.target.textContent} : node)))
+        if (e.target.textContent)
+          updateNodeContent(position, e.target.textContent);
+        else if (e.target.textContent?.trim() === '')
+          removeNode(position);
       }}
     >
       { content }
