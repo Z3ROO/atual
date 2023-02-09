@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
+import { RiSaveLine } from 'react-icons/ri';
 import { v4 as uuid } from 'uuid';
 import { useEditorContext } from '../../../Context';
 import imageIcon from '../../../assets/image.svg';
@@ -43,24 +44,35 @@ function newNode(node:any, extra?:any) {
 
 export function ControlPanel() {
   const [isControlsOpen, setIsControlsOpen] = useState(false);
+  const { save } = useEditorContext()!;
   
   return (
-    <div className='controls'  onClick={e => e.stopPropagation()}>
-      {
-        !isControlsOpen ? 
-        (
-        <div onClick={e => setIsControlsOpen(true)} className="controls-open">
-          <BiPlus style={{
-            width:'1.25rem',
-            height: '1.25rem',
-            color: '#10b981',
-            margin: '.5rem'
-          }} />
-          <span>Adicionar um novo elemento</span>
-        </div>
-        ) : 
-        ( <Controls {...{setIsControlsOpen}} /> )
-      }
+    <div className='controls-container'>
+      <div className='controls'  onClick={e => e.stopPropagation()}>
+        {
+          !isControlsOpen ? 
+          (
+          <div onClick={e => setIsControlsOpen(true)} className="controls-open">
+            <BiPlus style={{
+              width:'1.25rem',
+              height: '1.25rem',
+              color: '#10b981',
+              margin: '.5rem'
+            }} />
+            <span>Adicionar um novo elemento</span>
+          </div>
+          ) : 
+          ( <Controls {...{setIsControlsOpen}} /> )
+        }
+      </div>
+      <div className='controls controls-open' onClick={save}>
+        <RiSaveLine style={{
+          width:'1.25rem',
+          height: '1.25rem',
+          color: '#10b981',
+          margin: '.5rem'
+        }} />
+      </div>
     </div>
   )
 }

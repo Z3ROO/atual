@@ -21,8 +21,21 @@ export function EditorContextProvider(props: any) {
 
   }
 
+  async function save() {
+    const request = await fetch('http://localhost:3000/save', {
+      method: 'post',
+      body: JSON.stringify({data: packet}),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+
+    const response = await request.json();
+
+  }
+
   const value = {
-    packet, setPacket, reorderNodes, dumpster, toggleDumpster
+    packet, setPacket, reorderNodes, dumpster, toggleDumpster, save
   }
 
   return (
@@ -42,6 +55,7 @@ interface IEditorContext {
   reorderNodes(oldPosition: number, newPosition: number): void
   dumpster: boolean
   toggleDumpster: (val: boolean) => void
+  save: () => Promise<void>
 }
 
 
