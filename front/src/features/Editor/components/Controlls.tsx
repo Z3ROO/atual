@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { BiPlus } from 'react-icons/bi';
 import { v4 as uuid } from 'uuid';
 import { useEditorContext } from '../../../Context';
 import imageIcon from '../../../assets/image.svg';
@@ -44,10 +45,20 @@ export function ControlPanel() {
   const [isControlsOpen, setIsControlsOpen] = useState(false);
   
   return (
-    <div className='controlls'  onClick={e => e.stopPropagation()}>
+    <div className='controls'  onClick={e => e.stopPropagation()}>
       {
         !isControlsOpen ? 
-        (<div onClick={e => setIsControlsOpen(true)}> + </div>) : 
+        (
+        <div onClick={e => setIsControlsOpen(true)} className="controls-open">
+          <BiPlus style={{
+            width:'1.25rem',
+            height: '1.25rem',
+            color: '#10b981',
+            margin: '.5rem'
+          }} />
+          <span>Adicionar um novo elemento</span>
+        </div>
+        ) : 
         ( <Controls {...{setIsControlsOpen}} /> )
       }
     </div>
@@ -55,10 +66,10 @@ export function ControlPanel() {
 }
 
 function Controls(props:any) {
-  const {setIsControllsOpen} = props;
+  const {setIsControlsOpen} = props;
 
   useEffect(() => {
-    window.onclick = () => { setIsControllsOpen(false) }
+    window.onclick = () => { setIsControlsOpen(false) }
     return () => {window.onclick = null};
   }, []);
 
@@ -73,7 +84,7 @@ function Controls(props:any) {
 function Text() {
   const { packet, setPacket } = useEditorContext()!;
   return (
-    <div className="controlls-group">
+    <div className="controls-group">
       <p>Text</p>
       <Button
         name="Heading"
@@ -112,7 +123,7 @@ function Basic() {
   }
 
   return (
-    <div className="controlls-group">
+    <div className="controls-group">
       <p>Basic</p>
       <input 
         ref={fileInputRef} hidden
@@ -153,11 +164,11 @@ function Button(props: ButtonProps) {
   const { name, description, icon } = props;
 
   return (
-    <button {...props} className="controlls-button">
-      <div className="controlls-button-icon">
+    <button {...props} className="controls-button">
+      <div className="controls-button-icon">
         <img src={icon} />
       </div>
-      <div className="controlls-button-info">
+      <div className="controls-button-info">
         <span><strong>{name}</strong></span>
         <span>{description}</span>
       </div>

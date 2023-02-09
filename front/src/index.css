@@ -58,7 +58,7 @@
 }
 
 .draggable-div {
-  padding: .25em;
+  padding: .5em 0;
   min-height: 36px;
 }
 
@@ -66,34 +66,51 @@
   background-color: rgb(245, 245, 245);
 }
 
-.controlls {
+.controls {
   position: absolute;
   bottom:3rem;
   border-radius: 5px;
   background-color: #fafafa;
-  box-shadow: 2px 2px 3px #4b4b4b94;
+  box-shadow: 2px 2px 3px #4b4b4b3d;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.controlls-group {
+.controls-open {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.controls-open > span {
+  font-size: .75rem;
+  color: rgb(151, 151, 151);
+  margin-right: .5rem;
+  user-select: none;
+}
+
+.controls-open > span:hover {
+  color: rgb(128, 128, 128);
+}
+
+.controls-group {
   display: flex;
   flex-direction: column;
   border-top: 1px solid lightgray;
   padding-bottom: .5rem;
 }
 
-.controlls-group:first-child {
+.controls-group:first-child {
   border-top: none;
 }
 
-.controlls-group > p:first-child {
+.controls-group > p:first-child {
   padding: .5rem;
   font-size: .75rem;
 }
 
-.controlls-button {  
+.controls-button {  
   cursor: pointer;
   display: flex;
   align-items: start;
@@ -105,11 +122,11 @@
   color:rgba(36, 36, 36, 0.87)
 }
 
-.controlls-button:hover {
+.controls-button:hover {
   background-color: #f1f1f1;
 }
 
-.controlls-button-icon {
+.controls-button-icon {
   width: 2rem;
   height: 2rem;
   background-color: white;
@@ -120,18 +137,18 @@
   margin:.75rem;
 }
 
-.controlls-button:hover > .controlls-button-icon {
+.controls-button:hover > .controls-button-icon {
   transition: all .25s;
   transform: scale(1.05);
 }
 
-.controlls-button-icon > img {
+.controls-button-icon > img {
   width: 1rem;
   height: 1rem;
   margin: .5rem;
 }
 
-.controlls-button-info {
+.controls-button-info {
   display: flex;
   flex-direction: column;
   align-items: start;
