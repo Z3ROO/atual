@@ -195,6 +195,11 @@
 
 .dumpster {
   position: absolute;
+  top: 2rem;
+  left: calc(50% - 1.5rem);
+  padding: .5rem;
+  border-radius: 100%;
+  background-color: #10b981;
 }
 
 

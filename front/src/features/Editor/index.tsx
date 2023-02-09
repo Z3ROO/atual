@@ -16,13 +16,27 @@ export function Editor() {
 }
 
 function Dumpster() {
-  const { dumpster, toggleDumpster } = useEditorContext()!;
+  const { dumpster, toggleDumpster, setPacket } = useEditorContext()!;
 
   if (!dumpster)
     return null
 
   return (
-    <div className="dumpster" onDragStart={()=> { console.log("aqui tbm")}} draggable>
+    <div className="dumpster" draggable
+    onDragEnd={e => toggleDumpster(false)}
+    onDrop={(e)=> { 
+      const data = e.dataTransfer.getData('position');
+
+      if (data === '')
+        return;
+
+      setPacket(prev => {
+        return prev.filter((node, index) => index !== Number(data))
+      })
+      toggleDumpster(false);
+    }}
+    onDragOver={e => {e.preventDefault()}}
+    >
       <CgTrashEmpty style={{width: '2rem', height: '2rem', cursor: 'pointer'}} />
     </div>
   )

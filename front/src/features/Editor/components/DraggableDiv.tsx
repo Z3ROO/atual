@@ -50,7 +50,6 @@ export function DraggableDiv(props: DraggableDivProps) {
     let newPosition = style === 'top' ? position : position+1;
     reorderNodes(draggingNode, newPosition);
     setStyle(null)
-    toggleDumpster(false);
   }
 
 
@@ -62,6 +61,7 @@ export function DraggableDiv(props: DraggableDivProps) {
       onDragOver={dragOver}
       onDragLeave={dragOut}
       onDrop={dragDrop}
+      onDragEnd={e => toggleDumpster(false)}
       >
       {props.children}
     </div>
