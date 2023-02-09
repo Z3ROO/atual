@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon index.ts",
+    "build": "cd ../front && npx vite build && mv dist ../back/ && cd ../back && npx tsc",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
